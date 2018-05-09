@@ -18,7 +18,7 @@
     "group": { "default": "Other" },
     "title": { "default": "stateLicense" },
     "description": { "default": "stateLicense description" },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "ReportLibrary",
     "properties": {
       "description": "stateLicense",
       "states": "Arizona, Utah"

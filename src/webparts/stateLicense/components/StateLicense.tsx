@@ -22,21 +22,38 @@ export default class StateLicense extends React.Component<IStateLicenseProps, IS
   public render(): React.ReactElement<IStateLicenseProps> {
     return (
       <div>
-        <span>
+        <div className={styles.dropdown} style={{width: 67 + '%'}}>
           <Dropdown
+          disabled={this.state.submitStatus}
           placeHolder="Select a State"
-          label="States"
+          label="States Available for Licensing"
           id="stateSelect"
           options={this.USStates()}
           onChanged={(option: IDropdownOption, index: any) => {this.setState({state: option.text})}}
           />
+          </div>
+          <div className = { styles.spacer } style = {{marginTop: 10 + 'px'}}>
           <DefaultButton
-          disabled={false}
+          disabled={this.state.submitStatus}
           primary={true}
           text="Submit"
           onClick={this.submit}
           />
-        </span>
+          { this.state.submitStatus ?
+          <div>
+            <div className={styles.spacer} style = {{marginTop: 10 + 'px'}}> 
+              <label>Thank you! Your request has been sent. You'll receive an email confirmation shortly.</label>
+            </div>
+            <div style = {{marginTop: 10 + 'px'}}>
+              <DefaultButton
+              primary={true}
+              text="Submit Another Request"
+              onClick={() => {this.setState({ submitStatus: false})}}
+              />
+            </div>
+          </div>
+          : null }
+        </div>
       </div>
     )
   }
@@ -46,8 +63,10 @@ export default class StateLicense extends React.Component<IStateLicenseProps, IS
     let userEmail: string = this.state.userEmail;
     axios.post('https://peoplesmortgagecompany.sharepoint.com/sites/intranet/requestforms/_api/contextinfo')
     .then((res) => {
+      this.setState({
+        submitStatus: true
+      })
       digest = res.data.FormDigestValue;
-      console.log(res);
     })
     .then(() => {
       axios({
@@ -68,6 +87,11 @@ export default class StateLicense extends React.Component<IStateLicenseProps, IS
         }
       })
     })
+    .then((res:any ) => {
+      if(res.status == 200) {
+        this.setState
+      }
+    })
   }
 
   private USStates() {
@@ -80,10 +104,10 @@ export default class StateLicense extends React.Component<IStateLicenseProps, IS
     return options;
   }
 
-  componentDidMount() {
+  componentDidMount():void {
     axios({
       method:'GET',
-      url:'https://peoplesmortgagecompany.sharepoint.com/_api/web/CurrentUser',
+      url:'https://peoplesmortgagecompany.sharepoint.com/_api/web/CurrentUser'
     })
     .then((res) => {
       this.setState({
