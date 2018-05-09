@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "state-license-client-side-solution",
+    "id": "8e16dfb6-f132-4c1d-99a1-fd29c0868af6",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true
+  },
+  "paths": {
+    "zippedPackage": "solution/state-license.sppkg"
+  }
+}
